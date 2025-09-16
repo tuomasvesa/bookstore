@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
     private String title;
     private String author;
@@ -33,6 +33,9 @@ public class Book {
         this.price = null;
     }
 
+    public Long getId() {
+        return id;
+    }
     public String getTitle() {
         return title;
     }
