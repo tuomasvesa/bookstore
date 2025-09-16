@@ -10,6 +10,9 @@
     <form action="#" th:action="@{/updatebook}" method="post" th:object="${book}">
         <p>Title: <input type="text" th:field="*{title}"/></p> <!-- tähti-merkinnällä voi korvata ${book.title} -->
         <p>Author: <input type="text" th:field="*{author}"/></p>
+        <p>ISBN: <input type="text" th:field="*{isbn}"/></p>
+        <p>Price: <input type="text" th:field="*{price}"/></p>
+        <p><input type="hidden" th:field="*{id}"/></p>
         <p><input type="submit" value="Save"/></p>
     </form>
     
