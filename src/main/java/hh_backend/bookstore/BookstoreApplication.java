@@ -7,8 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import hh_backend.bookstore.domain.Category;
+import hh_backend.bookstore.domain.CategoryRepository;
 import hh_backend.bookstore.domain.Book;
 import hh_backend.bookstore.domain.BookRepository;
+
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -20,8 +23,23 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BookRepository bookRepository) {
+	public CommandLineRunner demo(BookRepository bookRepository, CategoryRepository categoryRepository) {
 		return (args) -> {
+
+			Log.info("save some sample cateogies");
+			Category category01 = new Category("Scifi");
+			Category category02 = new Category("Horror");
+			Category category03 = new Category("Fantasy");
+
+			categoryRepository.save(category01);
+			categoryRepository.save(category02);
+			categoryRepository.save(category03);
+
+			Log.info("fetch all categories");
+			for (Category category : categoryRepository.findAll()) {
+				Log.info(category.toString());
+			}
+
 			Log.info("save a couple of books");
 			Book kirja01 = new Book("Dune", "Frank Herbert", 1965, "978-951-98548-9-2", 12.0);
 			Book kirja02 = new Book("The Hobbit", "J.R.R. Tolkien", 1937, "978-951-98548-9-3", 10.0);
@@ -35,6 +53,8 @@ public class BookstoreApplication {
 			for (Book book : bookRepository.findAll() ) {
 				Log.info(book.toString());
 			}
+
+			
 
 		};
 	}
