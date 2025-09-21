@@ -26,7 +26,7 @@ public class BookstoreApplication {
 	public CommandLineRunner demo(BookRepository bookRepository, CategoryRepository categoryRepository) {
 		return (args) -> {
 
-			Log.info("save some sample cateogies");
+			Log.info("save some sample categories");
 			Category category01 = new Category("Scifi");
 			Category category02 = new Category("Horror");
 			Category category03 = new Category("Fantasy");
