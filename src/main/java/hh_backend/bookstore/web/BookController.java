@@ -3,6 +3,7 @@ package hh_backend.bookstore.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,11 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hh_backend.bookstore.domain.Book;
 import hh_backend.bookstore.domain.BookRepository;
 import hh_backend.bookstore.domain.CategoryRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class BookController {
@@ -49,6 +53,7 @@ public class BookController {
     }
 
     @GetMapping("/deletebook/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBook(@PathVariable("id") Long bookId) {
         bookRepo.deleteById(bookId); // SQL Delete
         return "redirect:/booklist";
@@ -65,5 +70,11 @@ public class BookController {
         bookRepo.save(updatedBook);
         return "redirect:/booklist";
     }
+
+    @RequestMapping("/login")
+    public String login() {
+        return "login"; // login.html
+    }
+    
 }
 
