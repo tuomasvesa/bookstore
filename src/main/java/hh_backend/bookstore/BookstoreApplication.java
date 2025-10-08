@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 
 import hh_backend.bookstore.domain.Category;
 import hh_backend.bookstore.domain.CategoryRepository;
+import hh_backend.bookstore.domain.UserRepository;
+import hh_backend.bookstore.domain.AppUser;
 import hh_backend.bookstore.domain.Book;
 import hh_backend.bookstore.domain.BookRepository;
 
@@ -22,7 +24,8 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BookRepository bookRepo, CategoryRepository categoryRepo) {
+	public CommandLineRunner demo(BookRepository bookRepo, CategoryRepository categoryRepo,
+									UserRepository userRepo) {
 		return (args) -> {
 
 			Log.info("save some sample categories");
@@ -50,6 +53,13 @@ public class BookstoreApplication {
 			bookRepo.save(kirja01);
 			bookRepo.save(kirja02);
 			bookRepo.save(kirja03);
+
+			AppUser user1 = new AppUser("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "user@gmail.com", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "admin@gmail.com", "ADMIN");
+			AppUser user3 = new AppUser("tuomas", "$2a$12$6huzdDEbBjP3ZcR3.gA.8u/FmmPEPAV62jS2hxWL4ASauPTtw9Op2", "tuomas@gmail.com", "ADMIN");
+			userRepo.save(user1);
+			userRepo.save(user2);
+			userRepo.save(user3);
 
 			Log.info("fetch all books");
 			for (Book book : bookRepo.findAll()) {
