@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import hh_backend.bookstore.domain.Book;
 import hh_backend.bookstore.domain.BookRepository;
+import hh_backend.bookstore.domain.CategoryRepository;
 
 @DataJpaTest
 public class BookRepositoryTest {
@@ -18,15 +19,18 @@ public class BookRepositoryTest {
     @Autowired
     private BookRepository bookrepository;
 
+    @Autowired
+    private CategoryRepository cRepository;
+
     @Test
     public void createNewBook() {
-        Book book = new Book("Best book", "Me", 2025, "1234567", 5.0, null);
+        Book book = new Book("Best book", "Me", 2025, "1234567", 5.0, cRepository.findByName("Horror").get(0));
         bookrepository.save(book);
         assertThat(book.getId()).isNotNull();
     }
 
     @Test
-    public void deleteBook() {
+    public void deleteBookById() {
         List<Book> books = bookrepository.findByTitle("Dune");
         Long id = books.get(0).getId();
         bookrepository.deleteById(id);
